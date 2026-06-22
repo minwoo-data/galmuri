@@ -1,0 +1,22 @@
+{
+  "name": "galmuri",
+  "version": "0.1.1",
+  "description": "Harvest reusable, project-agnostic techniques (hooks, rules, guards, patterns) from a project and store them as portable technique cards in a knowledge repo, so the know-how survives without the project.",
+  "author": {
+    "name": "Minwoo Park",
+    "url": "https://github.com/minwoo-data"
+  },
+  "homepage": "https://github.com/minwoo-data/galmuri",
+  "repository": "https://github.com/minwoo-data/galmuri",
+  "license": "MIT",
+  "keywords": [
+    "knowledge-extraction",
+    "distillation",
+    "portability",
+    "technique-cards",
+    "knowledge-base",
+    "reuse"
+  ],
+  "commands": "./commands/",
+  "skills": "./skills/"
+}
