@@ -1,7 +1,7 @@
 {
   "name": "galmuri",
-  "version": "0.1.1",
-  "description": "Harvest reusable, project-agnostic techniques (hooks, rules, guards, patterns) from a project and store them as portable technique cards in a knowledge repo, so the know-how survives without the project.",
+  "version": "0.2.0",
+  "description": "Harvest reusable, project-agnostic techniques (hooks, rules, guards, patterns) from a project into portable technique cards, and forge skill-shaped cards into verified Claude Code skills.",
   "author": {
     "name": "Minwoo Park",
     "url": "https://github.com/minwoo-data"
@@ -15,7 +15,8 @@
     "portability",
     "technique-cards",
     "knowledge-base",
-    "reuse"
+    "reuse",
+    "skill-generation"
   ],
   "commands": "./commands/",
   "skills": "./skills/"

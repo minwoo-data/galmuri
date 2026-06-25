@@ -1,0 +1,9 @@
+# forge run outputs — scaffolded skills are regenerable from cards
+forged/
+
+# galmuri run state
+.galmuri/
+
+# python
+__pycache__/
+*.pyc
