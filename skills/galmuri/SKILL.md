@@ -1,9 +1,22 @@
 ---
 name: galmuri
 description: Extract reusable, project-agnostic techniques (hooks, rules, guards, structural patterns) from a project and write portable technique cards to a knowledge repo, so the know-how survives without the project. Source is read-only; cards are redacted and self-contained.
+argument-hint: "<project-path> [--out <dir>] [--scope enforcement,discipline,architecture,ops,knowledge,testing,security] [--deny <tok,tok>] [--dry-run] [--update] | --continue <slug>"
+user-invocable: true
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Agent
 ---
 
 # 갈무리 (galmuri) - Project Know-How Extraction
+
+갈무리 = gathering a harvest and storing it away properly for later use. galmuri
+gathers the *technique*, never the feature.
 
 ## TL;DR
 
@@ -21,6 +34,21 @@ description: Extract reusable, project-agnostic techniques (hooks, rules, guards
 
 > This description is exposed in the skill catalogue - it is the first-pass
 > signal for whether to pick galmuri.
+
+## Arguments
+
+`/galmuri` receives its arguments appended as `ARGUMENTS: <string>`.
+
+| Argument | Action |
+|---|---|
+| `<project-path>` | Project to harvest (default: cwd) |
+| `--out <dir>` | Knowledge dir for cards (default: sibling `../minwoo-data/knowledge`, else `./distilled`) |
+| `--scope a,b,c` | Restrict extraction to the listed seams (default: all seven below) |
+| `--deny tok,tok` | Extra redaction tokens beyond the auto-seeded denylist |
+| `--dry-run` | Survey + classify only; print the would-extract list, write nothing |
+| `--update` | Re-run: refresh existing cards by slug, add new, never delete hand-edited cards without confirmation |
+| `--continue <slug>` | Resume an interrupted run from `<out>/.galmuri/<slug>/state.json` |
+| (no argument) | Call AskUserQuestion (header `갈무리`, question "Which project do you want to galmuri into portable technique cards?", single select) with the options **Current directory** (harvest the cwd), **Enter a path** (ask for the project path), **Continue a run** (ask for the slug next); then run with the resolved arguments |
 
 ## Philosophy - opposite of a code reviewer
 
@@ -76,9 +104,13 @@ one-off scripts with no reusable shape.
 ## Phases
 
 ### Phase 0 - Resolve
-- Parse `$ARGUMENTS`: `<project-path>` (default cwd), `--out`, `--scope`,
-  `--deny`, `--dry-run`, `--update`, `--continue`.
-- Resolve absolute paths. **Refuse if `--out` is inside `<project-path>`.**
+- Parse the arguments (table above): `<project-path>` (default cwd), `--out`,
+  `--scope`, `--deny`, `--dry-run`, `--update`, `--continue`.
+- **Refuse if the project is missing** (`test -d "<project-path>"`).
+- Resolve absolute paths. **Refuse if `--out` is inside `<project-path>`**
+  (self-harvest would pollute the project being read).
+- Git is optional: commit history is an extraction signal; degrade gracefully
+  if the project is not a git repo.
 - Seed the denylist automatically: read the project's identity surface
   (top-level README/package manifest/CLAUDE.md) and harvest the org name,
   product name, primary hostnames, and any human emails into the redaction

@@ -1,6 +1,6 @@
 {
   "name": "galmuri",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Harvest reusable, project-agnostic techniques (hooks, rules, guards, patterns) from a project into portable technique cards, and forge skill-shaped cards into verified Claude Code skills.",
   "author": {
     "name": "Minwoo Park",
@@ -18,6 +18,5 @@
     "reuse",
     "skill-generation"
   ],
-  "commands": "./commands/",
   "skills": "./skills/"
 }

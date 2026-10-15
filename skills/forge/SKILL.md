@@ -1,6 +1,15 @@
 ---
 name: forge
 description: This skill should be used when turning a galmuri technique card into a working Claude Code skill — when the user says "forge this card into a skill", "make a skill from this technique card", "scaffold a SKILL.md from this card", or "card to skill". Classifies the card's shape first and declines non-skill cards.
+argument-hint: "<card-path> [--out <dir>] [--force-skill]"
+user-invocable: true
+allowed-tools:
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
 ---
 
 # forge (단조) — Technique card → Skill
@@ -14,6 +23,21 @@ before it lands. The companion to `galmuri`: galmuri *extracts* cards, forge
 
 This is the **skill-only MVP**. Cards that are really hooks, commands, or
 references are detected and declined (with the better-fit verdict), not forced.
+
+## Arguments
+`/forge` receives its arguments appended as `ARGUMENTS: <string>`.
+
+| Argument | Action |
+|---|---|
+| `<card-path>` | The single technique card to forge (required) |
+| `--out <dir>` | Output dir for the scaffold (default `./forged/<card-slug>/`) |
+| `--force-skill` | Forge a skill even if the classifier says another shape fits better |
+| (no argument) | Ask the user for the card path |
+
+## Prerequisites
+- `python3` on PATH (the classifier and verifier are pure-stdlib Python).
+- A galmuri technique card with the standard frontmatter + Problem / Technique /
+  How to apply / Adaptation notes / Pitfalls shape.
 
 ## Hard invariants
 1. **One card in, one skill out.** Operate on a single card per run.
